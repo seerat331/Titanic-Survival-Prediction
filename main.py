@@ -7,6 +7,7 @@ from src.model_training import ModelTrainer
 from src.feature_importance import FeatureImportance
 from src.hyperparameter_tuning import HyperParameterTuner
 from src.feature_engineering import FeatureEngineering
+from src.cross_validation import CrossValidation
 from src.config import (
     RAW_DATA_PATH,
     MODEL_DIR,
@@ -100,6 +101,7 @@ def main():
         print(f"\n{model_name}")
         for metric, value in metrics.items():
             print(f"{metric}: {value:.4f}")
+# hyper parameter
 
     print("\n"+"="*60)
     print("Hyperparameter Tuning ")
@@ -112,6 +114,13 @@ def main():
     trainer.save_model(
         best_rf,
         MODEL_DIR / "Best_random_forest.pkl"
+    )
+# Corss validations
+    cross_validator=CrossValidation()
+    cross_validator.evaluate(
+        best_rf,
+        X_train,
+        y_train
     )
 
 # Feature importance

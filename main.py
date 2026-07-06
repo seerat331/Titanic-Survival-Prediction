@@ -8,6 +8,8 @@ from src.utils import create_directories
 from src.data_loader import DataLoader
 from src.preprocessing import DataPreprocessor
 from src.eda import EDA
+from src.evaluation import Evaluator
+from src.model_training import ModelTrainer
 from src.feature_engineering import FeatureEngineering
 from src.config import (
     RAW_DATA_PATH,
@@ -42,10 +44,28 @@ def main():
     processed_df=feature_engineering.process()
     feature_engineering.save_processed_dataset(PROCESSED_DATA_PATH)
 
-    X_train, X_test, y_tarin, y_test=feature_engineering.split_dataset(
+    X_train, X_test, y_train, y_test=feature_engineering.split_dataset(
         test_size=TEST_SIZE,
         random_state=RANDOM_STATE
     )
+    trainer=ModelTrainer()
+    trained_models=trainer.train_models(
+        X_train, y_train
+    )
+
+    evaluator=Evaluator()
+    results=evaluator.evaluate_models(
+        trained_models,
+        X_test, y_test
+    )
+
+    print("\nModel Performance")
+    print("="*60)
+    for model_name, metrics in results.items():
+        print(f"\n{model_name}")
+        for metric, value in metrics.items():
+            print(f"{metric}: {value:.4f}")
+            
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape :",X_test.shape)
 

@@ -11,6 +11,6 @@ class DataLoader:
             print("Dataset is not found.")
             return None
         except Exception as e:
-            print(e)
+            print(f"{e}")
             return None
         

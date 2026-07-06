@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 class FeatureImportance:
     def plot(self, model, X_train, save_path):
-        if not hasattr(model, "feature_importance_"):
+        if not hasattr(model, "feature_importances_"):
             print("This model does not support feature importance.")
             return
         importance=pd.DataFrame(
@@ -15,7 +15,7 @@ class FeatureImportance:
             by="Importance",
             ascending=False
         )
-        print("\nFEEature Importance\n")
+        print("\nFeature Importance\n")
         print(importance)
         plt.figure(figsize=(8,6))
         plt.barh(

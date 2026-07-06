@@ -115,6 +115,9 @@ def main():
     )
 
 # Feature importance
+
+    print(type(best_rf))
+    print(best_rf)
     feature_importance=FeatureImportance()
     feature_importance.plot(
         best_rf,

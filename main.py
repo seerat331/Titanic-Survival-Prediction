@@ -10,6 +10,8 @@ from src.preprocessing import DataPreprocessor
 from src.eda import EDA
 from src.evaluation import Evaluator
 from src.model_training import ModelTrainer
+from src.feature_importance import FeatureImportance
+from src.hyperparameter_tuning import HyperParameterTuner
 from src.feature_engineering import FeatureEngineering
 from src.config import (
     RAW_DATA_PATH,
@@ -58,16 +60,72 @@ def main():
         trained_models,
         X_test, y_test
     )
+    best_model_name=max(
+        results, 
+        key=lambda model: results[model]["Accuracy"]
 
+    )
+    print(f"\nBest Baseline Model:{best_model_name}")
+    best_model=trained_models[best_model_name]
+    trainer.save_model(
+        best_model, MODEL_DIR / "best_model.pkl"
+    )
+    evaluator.classification_report(
+        best_model, 
+        X_test,
+        y_test
+    )
+    evaluator.confusion_matrux_plot(
+        best_model, 
+        X_test,
+        y_test,
+        FIGURE_DIR / "confusion_matrix.png"
+    )
+    evaluator.roc_curve_plot(
+        best_model,
+        X_test,
+        y_test,
+        FIGURE_DIR / "roc_curve.png"
+    )
+    evaluator.save_results(
+        results, 
+        REPORT_DIR / "model_metrices.csv"
+    )
+
+
+# Model performance
     print("\nModel Performance")
     print("="*60)
     for model_name, metrics in results.items():
         print(f"\n{model_name}")
         for metric, value in metrics.items():
             print(f"{metric}: {value:.4f}")
-            
+
+    print("\n"+"="*60)
+    print("Hyperparameter Tuning ")
+    print("="*60)
+    tuner=HyperParameterTuner()
+    best_rf=tuner.tune(
+        X_train,
+        y_train
+    )
+    trainer.save_model(
+        best_rf,
+        MODEL_DIR / "Best_random_forest.pkl"
+    )
+
+# Feature importance
+    feature_importance=FeatureImportance()
+    feature_importance.plot(
+        best_rf,
+        X_train,
+        FIGURE_DIR / "feature_importance.png"
+    )
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape :",X_test.shape)
+
+
+
 
 if __name__=="__main__":
     main()

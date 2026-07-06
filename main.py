@@ -7,6 +7,7 @@ from src.config import (
 from src.utils import create_directories
 from src.data_loader import DataLoader
 from src.preprocessing import DataPreprocessor
+from src.eda import EDA
 
 def main():
     create_directories(
@@ -21,6 +22,8 @@ def main():
     
     preprocessor=DataPreprocessor(df)
     preprocessor.full_report()
+    eda=EDA(df, FIGURE_DIR)
+    eda.run_all()
 
 if __name__=="__main__":
     main()

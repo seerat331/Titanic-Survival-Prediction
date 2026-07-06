@@ -6,6 +6,7 @@ from src.config import (
 )
 from src.utils import create_directories
 from src.data_loader import DataLoader
+from src.preprocessing import DataPreprocessor
 
 def main():
     create_directories(
@@ -17,10 +18,9 @@ def main():
     df=loader.load_data()
     if df is None:
         return
-    print()
-    print("First Five Rows:")
-    print(df.head())
-    print()
-    print("Shape:", df.shape)
+    
+    preprocessor=DataPreprocessor(df)
+    preprocessor.full_report()
+
 if __name__=="__main__":
     main()

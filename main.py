@@ -18,9 +18,9 @@ def main():
     if df is None:
         return
     print()
-    print("First Five Rows")
+    print("First Five Rows:")
     print(df.head())
     print()
-    print("Shape :", df.shape)
+    print("Shape:", df.shape)
 if __name__=="__main__":
     main()

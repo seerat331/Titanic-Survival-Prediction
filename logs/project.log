@@ -215,3 +215,27 @@ TypeError: float() argument must be a string or a real number, not 'dict'
 2026-07-07 21:39:53,715 | INFO | Predication saved to /Users/macbookair/Documents/ml projects for github/titanic dataset/outputs/predictions/prediction.csv
 2026-07-07 21:39:53,716 | INFO | Dataset loaded successfully
 2026-07-07 21:39:53,717 | ERROR | Dataset not found
+2026-07-07 23:50:23,527 | INFO | Dataset loaded successfully.
+2026-07-07 23:50:27,853 | INFO | Training Logistic Regression
+2026-07-07 23:50:27,917 | INFO | Logistic Regression trained successfully
+2026-07-07 23:50:27,917 | INFO | Training Decision Tree
+2026-07-07 23:50:27,923 | INFO | Decision Tree trained successfully
+2026-07-07 23:50:27,923 | INFO | Training Random Forest
+2026-07-07 23:50:28,384 | INFO | Random Forest trained successfully
+2026-07-07 23:50:28,385 | INFO | Training KNN
+2026-07-07 23:50:28,391 | INFO | KNN trained successfully
+2026-07-07 23:50:28,391 | INFO | Training SVM
+2026-07-07 23:50:28,425 | INFO | SVM trained successfully
+2026-07-07 23:50:28,426 | INFO | All models trained successfully
+2026-07-07 23:50:28,430 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/logistic_regression.pkl
+2026-07-07 23:50:28,434 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/decision_tree.pkl
+2026-07-07 23:50:28,606 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/random_forest.pkl
+2026-07-07 23:50:28,613 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/knn.pkl
+2026-07-07 23:50:28,619 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/svm.pkl
+2026-07-07 23:50:28,878 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/best_model.pkl
+2026-07-07 23:52:45,438 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/Best_random_forest.pkl
+2026-07-07 23:53:14,724 | INFO | Model LOaded successfully from /Users/macbookair/Documents/ml projects for github/titanic dataset/models/Best_random_forest.pkl
+2026-07-07 23:53:14,787 | INFO | Prediction completed successfully.
+2026-07-07 23:53:14,790 | INFO | Predication saved to /Users/macbookair/Documents/ml projects for github/titanic dataset/outputs/predictions/prediction.csv
+2026-07-07 23:53:14,790 | INFO | Dataset loaded successfully
+2026-07-07 23:53:14,790 | ERROR | Dataset not found

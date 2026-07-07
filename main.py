@@ -19,7 +19,7 @@ from src.config import (
     REPORT_DIR,
     SHOW_FULL_REPORT,
     SHOW_EDA,
-    PREDICTION_DIR
+    PREDICTION_DIR,
 )
 from src.config import (
     RAW_DATA_PATH,
@@ -29,171 +29,108 @@ from src.config import (
     RANDOM_STATE,
     REPORT_DIR,
     TEST_SIZE,
-    PROCESSED_DATA_PATH
+    PROCESSED_DATA_PATH,
 )
+
 
 # Directories
 def main():
-    create_directories(
-        MODEL_DIR,
-        FIGURE_DIR,
-        REPORT_DIR,
-        PREDICTION_DIR
-    )
-# Data Loader
+    create_directories(MODEL_DIR, FIGURE_DIR, REPORT_DIR, PREDICTION_DIR)
+    # Data Loader
 
-    loader=DataLoader(RAW_DATA_PATH)
-    df=loader.load_data()
+    loader = DataLoader(RAW_DATA_PATH)
+    df = loader.load_data()
     if df is None:
         return
-# Preprocessing 
+    # Preprocessing
 
-    preprocessor=DataPreprocessor(df)
+    preprocessor = DataPreprocessor(df)
     if SHOW_FULL_REPORT:
         preprocessor.full_report()
     eda = EDA(df, FIGURE_DIR)
     if SHOW_EDA:
         eda.run_all()
-# Feature Engineering
+    # Feature Engineering
 
-    feature_engineering=FeatureEngineering(
-        df,TARGET_COLUMN
-    )
-    processed_df=feature_engineering.process()
+    feature_engineering = FeatureEngineering(df, TARGET_COLUMN)
+    processed_df = feature_engineering.process()
     feature_engineering.save_processed_dataset(PROCESSED_DATA_PATH)
 
-    X_train, X_test, y_train, y_test=feature_engineering.split_dataset(
-        test_size=TEST_SIZE,
-        random_state=RANDOM_STATE
+    X_train, X_test, y_train, y_test = feature_engineering.split_dataset(
+        test_size=TEST_SIZE, random_state=RANDOM_STATE
     )
-# Model Training
-    trainer=ModelTrainer()
-    trained_models=trainer.train_models(
-        X_train, y_train
-    )
+    # Model Training
+    trainer = ModelTrainer()
+    trained_models = trainer.train_models(X_train, y_train)
     for name, model in trained_models.items():
-        trainer.save_model(
-            model,
-            MODEL_DIR / f"{name.replace(' ', '_').lower()}.pkl"
-        )
-# Evaluation
+        trainer.save_model(model, MODEL_DIR / f"{name.replace(' ', '_').lower()}.pkl")
+    # Evaluation
 
-    evaluator=Evaluator()
-    results=evaluator.evaluate_models(
-        trained_models,
-        X_test, y_test
-    )
-    best_model_name=max(
-        results, 
-        key=lambda model: results[model]["Accuracy"]
-
-    )
+    evaluator = Evaluator()
+    results = evaluator.evaluate_models(trained_models, X_test, y_test)
+    best_model_name = max(results, key=lambda model: results[model]["Accuracy"])
     print(f"\nBest Baseline Model:{best_model_name}")
-    best_model=trained_models[best_model_name]
-    trainer.save_model(
-        best_model, MODEL_DIR / "best_model.pkl"
-    )
-    evaluator.classification_report(
-        best_model, 
-        X_test,
-        y_test
-    )
+    best_model = trained_models[best_model_name]
+    trainer.save_model(best_model, MODEL_DIR / "best_model.pkl")
+    evaluator.classification_report(best_model, X_test, y_test)
     evaluator.confusion_matrux_plot(
-        best_model, 
-        X_test,
-        y_test,
-        FIGURE_DIR / "confusion_matrix.png"
+        best_model, X_test, y_test, FIGURE_DIR / "confusion_matrix.png"
     )
-    evaluator.roc_curve_plot(
-        best_model,
-        X_test,
-        y_test,
-        FIGURE_DIR / "roc_curve.png"
-    )
-    evaluator.save_results(
-        results, 
-        REPORT_DIR / "model_metrics.csv"
-    )
+    evaluator.roc_curve_plot(best_model, X_test, y_test, FIGURE_DIR / "roc_curve.png")
+    evaluator.save_results(results, REPORT_DIR / "model_metrics.csv")
 
-
-# Model performance
+    # Model performance
     print("=" * 60)
     print("MODEL PERFORMANCE SUMMARY")
     print("=" * 60)
-    
+
     for model_name, metrics in results.items():
         print(f"\n{model_name}")
         for metric, value in metrics.items():
             print(f"{metric}: {value:.4f}")
-# hyper parameter
+    # hyper parameter
 
-    print("\n"+"="*60)
+    print("\n" + "=" * 60)
     print("Hyperparameter Tuning ")
-    print("="*60)
-    tuner=HyperParameterTuner()
-    best_rf=tuner.tune(
-        X_train,
-        y_train
-    )
-    trainer.save_model(
-        best_rf,
-        MODEL_DIR / "Best_random_forest.pkl"
-    )
-# Cross validations
-    cross_validator=CrossValidation()
-    cross_validator.evaluate(
-        best_rf,
-        X_train,
-        y_train
-    )
+    print("=" * 60)
+    tuner = HyperParameterTuner()
+    best_rf = tuner.tune(X_train, y_train)
+    trainer.save_model(best_rf, MODEL_DIR / "Best_random_forest.pkl")
+    # Cross validations
+    cross_validator = CrossValidation()
+    cross_validator.evaluate(best_rf, X_train, y_train)
 
-# Learning curve
-    learning_curve=LearningCurve()
-    learning_curve.plot(
-        best_rf,
-        X_train, 
-        y_train, 
-        FIGURE_DIR / "learning_curve.png"
-    )
+    # Learning curve
+    learning_curve = LearningCurve()
+    learning_curve.plot(best_rf, X_train, y_train, FIGURE_DIR / "learning_curve.png")
 
-# Feature importance
+    # Feature importance
 
     print(type(best_rf))
     print(best_rf)
-    feature_importance=FeatureImportance()
-    feature_importance.plot(
-        best_rf,
-        X_train,
-        FIGURE_DIR / "feature_importance.png"
-    )
-# Predictor
-    print("\n"+"="*60)
+    feature_importance = FeatureImportance()
+    feature_importance.plot(best_rf, X_train, FIGURE_DIR / "feature_importance.png")
+    # Predictor
+    print("\n" + "=" * 60)
     print("Passenger Prediction")
-    print("="*60)
-    predictor=Predictor(
-        MODEL_DIR /"Best_random_forest.pkl"
+    print("=" * 60)
+    predictor = Predictor(MODEL_DIR / "Best_random_forest.pkl")
+    sample_passenger = pd.DataFrame(
+        {
+            "Pclass": [1],
+            "Sex": [0],
+            "Age": [28],
+            "SibSp": [0],
+            "Parch": [0],
+            "Fare": [78],
+            "Embarked": [0],
+        }
     )
-    sample_passenger=pd.DataFrame({
-        "Pclass":[1],
-        "Sex":[0],
-        "Age":[28],
-        "SibSp":[0],
-        "Parch":[0],
-        "Fare":[78],
-        "Embarked":[0]
-    })
-    
-    prediction, probability=predictor.predict(
-        sample_passenger
-    )
-    predictor.display_prediction(
-        prediction,
-        probability
-    )
+
+    prediction, probability = predictor.predict(sample_passenger)
+    predictor.display_prediction(prediction, probability)
     predictor.save_prediction(
-        prediction,
-        probability,
-        PREDICTION_DIR / "prediction.csv"
+        prediction, probability, PREDICTION_DIR / "prediction.csv"
     )
     print("\nPrediction")
     print("Survived" if prediction == 1 else "Did Not Survive")
@@ -201,15 +138,11 @@ def main():
         print(f"Survival Probability :{probability:.2%}")
 
     print("\nTraining Shape:", X_train.shape)
-    print("Testing Shape :",X_test.shape)
+    print("Testing Shape :", X_test.shape)
 
     logger.info("Dataset loaded successfully")
     logger.error("Dataset not found")
 
-    
 
-
-
-
-if __name__=="__main__":
+if __name__ == "__main__":
     main()

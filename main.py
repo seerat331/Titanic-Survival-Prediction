@@ -8,6 +8,7 @@ from src.feature_importance import FeatureImportance
 from src.hyperparameter_tuning import HyperParameterTuner
 from src.feature_engineering import FeatureEngineering
 from src.leearning_curve import LeaarningCurve
+from src.predictor import Predictor
 from src.cross_validation import CrossValidation
 from src.config import (
     RAW_DATA_PATH,
@@ -132,7 +133,7 @@ def main():
         y_train, 
         FIGURE_DIR / "learning_curve.png"
     )
-    
+
 # Feature importance
 
     print(type(best_rf))
@@ -143,9 +144,32 @@ def main():
         X_train,
         FIGURE_DIR / "feature_importance.png"
     )
+# Predictor
+    print("\n"+"="*60)
+    print("Passenger Prediction")
+    print("="*60)
+    predictor=Predictor(
+        MODEL_DIR /"Best_random_forest.pkl"
+    )
+    sample_passenger={
+        "Pclass":1,
+        "Sex":0,
+        "Age":28,
+        "SibSp":0,
+        "Parch":0,
+        "Fare":100,
+        "Embarked":0
+    }
+    prediction, probability=predictor.predict(
+        sample_passenger
+    )
+    print("\nPrediction")
+    print("Survived" if prediction == 1 else "Did Not Survive")
+    if probability is not None:
+        print(f"Survival Probability :{probability:.2%}")
+
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape :",X_test.shape)
-
 
 
 

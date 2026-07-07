@@ -1,0 +1,12 @@
+2026-07-07 14:48:08,147 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-07-07 14:48:08,178 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-07-07 14:48:08,764 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-07-07 14:48:08,781 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-07-07 14:48:10,710 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-07-07 14:48:10,721 | INFO | Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-07-07 14:51:04,108 | INFO | Dataset loaded successfully
+2026-07-07 14:51:04,116 | ERROR | Dataset not found
+2026-07-07 15:16:54,707 | INFO | Dataset loaded successfully
+2026-07-07 15:17:13,664 | INFO | Dataset loaded successfully
+2026-07-07 15:20:07,908 | INFO | Dataset loaded successfully
+2026-07-07 15:20:07,910 | ERROR | Dataset not found

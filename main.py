@@ -9,6 +9,7 @@ from src.hyperparameter_tuning import HyperParameterTuner
 from src.feature_engineering import FeatureEngineering
 from src.leearning_curve import LeaarningCurve
 from src.predictor import Predictor
+from src.logger import logger
 from src.cross_validation import CrossValidation
 from src.config import (
     RAW_DATA_PATH,
@@ -27,6 +28,7 @@ from src.config import (
     PROCESSED_DATA_PATH
 )
 
+# Directories
 def main():
     create_directories(
         MODEL_DIR,
@@ -170,6 +172,10 @@ def main():
 
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape :",X_test.shape)
+
+    logger.info("Dataset loaded successfully")
+    logger.error("Dataset not found")
+
 
 
 

@@ -1,3 +1,4 @@
+import pandas as pd
 from src.utils import create_directories
 from src.data_loader import DataLoader
 from src.preprocessing import DataPreprocessor
@@ -15,7 +16,10 @@ from src.config import (
     RAW_DATA_PATH,
     MODEL_DIR,
     FIGURE_DIR,
-    REPORT_DIR
+    REPORT_DIR,
+    SHOW_FULL_REPORT,
+    SHOW_EDA,
+    PREDICTION_DIR
 )
 from src.config import (
     RAW_DATA_PATH,
@@ -34,16 +38,23 @@ def main():
         MODEL_DIR,
         FIGURE_DIR,
         REPORT_DIR,
+        PREDICTION_DIR
     )
+# Data Loader
+
     loader=DataLoader(RAW_DATA_PATH)
     df=loader.load_data()
     if df is None:
         return
-    
+# Preprocessing 
+
     preprocessor=DataPreprocessor(df)
-    preprocessor.full_report()
-    eda=EDA(df, FIGURE_DIR)
-    eda.run_all()
+    if SHOW_FULL_REPORT:
+        preprocessor.full_report()
+    eda = EDA(df, FIGURE_DIR)
+    if SHOW_EDA:
+        eda.run_all()
+# Feature Engineering
 
     feature_engineering=FeatureEngineering(
         df,TARGET_COLUMN
@@ -55,10 +66,17 @@ def main():
         test_size=TEST_SIZE,
         random_state=RANDOM_STATE
     )
+# Model Training
     trainer=ModelTrainer()
     trained_models=trainer.train_models(
         X_train, y_train
     )
+    for name, model in trained_models.items():
+        trainer.save_model(
+            model,
+            MODEL_DIR / f"{name.replace(' ', '_').lower()}.pkl"
+        )
+# Evaluation
 
     evaluator=Evaluator()
     results=evaluator.evaluate_models(
@@ -94,13 +112,15 @@ def main():
     )
     evaluator.save_results(
         results, 
-        REPORT_DIR / "model_metrices.csv"
+        REPORT_DIR / "model_metrics.csv"
     )
 
 
 # Model performance
-    print("\nModel Performance")
-    print("="*60)
+    print("=" * 60)
+    print("MODEL PERFORMANCE SUMMARY")
+    print("=" * 60)
+    
     for model_name, metrics in results.items():
         print(f"\n{model_name}")
         for metric, value in metrics.items():
@@ -119,7 +139,7 @@ def main():
         best_rf,
         MODEL_DIR / "Best_random_forest.pkl"
     )
-# Corss validations
+# Cross validations
     cross_validator=CrossValidation()
     cross_validator.evaluate(
         best_rf,
@@ -153,17 +173,27 @@ def main():
     predictor=Predictor(
         MODEL_DIR /"Best_random_forest.pkl"
     )
-    sample_passenger={
-        "Pclass":1,
-        "Sex":0,
-        "Age":28,
-        "SibSp":0,
-        "Parch":0,
-        "Fare":100,
-        "Embarked":0
-    }
+    sample_passenger=pd.DataFrame({
+        "Pclass":[1],
+        "Sex":[0],
+        "Age":[28],
+        "SibSp":[0],
+        "Parch":[0],
+        "Fare":[78],
+        "Embarked":[0]
+    })
+    
     prediction, probability=predictor.predict(
         sample_passenger
+    )
+    predictor.display_prediction(
+        prediction,
+        probability
+    )
+    predictor.save_prediction(
+        prediction,
+        probability,
+        PREDICTION_DIR / "prediction.csv"
     )
     print("\nPrediction")
     print("Survived" if prediction == 1 else "Did Not Survive")
@@ -175,6 +205,8 @@ def main():
 
     logger.info("Dataset loaded successfully")
     logger.error("Dataset not found")
+
+    
 
 
 

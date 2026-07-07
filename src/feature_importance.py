@@ -21,7 +21,11 @@ class FeatureImportance:
         plt.barh(
             importance["Feature"],
             importance["Importance"]
-        )        
+        )
+
+        for i, value in enumerate(importance["Importance"]):
+            plt.text(value, i, f"{value:.2f}")
+            
         plt.xlabel("Importance")
         plt.ylabel("Feature")
         plt.title("Feature Importance")

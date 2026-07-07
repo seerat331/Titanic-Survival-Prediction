@@ -7,6 +7,7 @@ from src.model_training import ModelTrainer
 from src.feature_importance import FeatureImportance
 from src.hyperparameter_tuning import HyperParameterTuner
 from src.feature_engineering import FeatureEngineering
+from src.leearning_curve import LeaarningCurve
 from src.cross_validation import CrossValidation
 from src.config import (
     RAW_DATA_PATH,
@@ -123,6 +124,15 @@ def main():
         y_train
     )
 
+# Learning curve
+    learning_curve=LeaarningCurve()
+    learning_curve.plot(
+        best_rf,
+        X_train, 
+        y_train, 
+        FIGURE_DIR / "learning_curve.png"
+    )
+    
 # Feature importance
 
     print(type(best_rf))

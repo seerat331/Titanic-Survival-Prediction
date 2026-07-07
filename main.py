@@ -7,7 +7,7 @@ from src.model_training import ModelTrainer
 from src.feature_importance import FeatureImportance
 from src.hyperparameter_tuning import HyperParameterTuner
 from src.feature_engineering import FeatureEngineering
-from src.leearning_curve import LeaarningCurve
+from src.learning_curve import LearningCurve
 from src.predictor import Predictor
 from src.logger import logger
 from src.cross_validation import CrossValidation
@@ -128,7 +128,7 @@ def main():
     )
 
 # Learning curve
-    learning_curve=LeaarningCurve()
+    learning_curve=LearningCurve()
     learning_curve.plot(
         best_rf,
         X_train, 

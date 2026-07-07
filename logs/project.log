@@ -10,3 +10,37 @@
 2026-07-07 15:17:13,664 | INFO | Dataset loaded successfully
 2026-07-07 15:20:07,908 | INFO | Dataset loaded successfully
 2026-07-07 15:20:07,910 | ERROR | Dataset not found
+2026-07-07 16:09:53,358 | INFO | Dataset loaded successfully
+2026-07-07 16:47:32,902 | INFO | Dataset loaded successfully.
+2026-07-07 17:57:40,999 | INFO | Dataset loaded successfully.
+2026-07-07 17:57:44,949 | INFO | Training Logistic Regression
+2026-07-07 17:57:45,017 | INFO | Logistic Regression trained successfully
+2026-07-07 17:57:45,017 | INFO | Training Decision Tree
+2026-07-07 17:57:45,023 | INFO | Decision Tree trained successfully
+2026-07-07 17:57:45,023 | INFO | Training Random Forest
+2026-07-07 17:57:45,358 | INFO | Random Forest trained successfully
+2026-07-07 17:57:45,359 | INFO | Training KNN
+2026-07-07 17:57:45,362 | INFO | KNN trained successfully
+2026-07-07 17:57:45,362 | INFO | Training SVM
+2026-07-07 17:57:45,394 | INFO | SVM trained successfully
+2026-07-07 17:57:45,394 | INFO | All models trained successfully
+2026-07-07 17:57:45,506 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/best_model.pkl
+2026-07-07 18:00:11,669 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/Best_random_forest.pkl
+2026-07-07 18:00:39,231 | INFO | Dataset loaded successfully
+2026-07-07 18:00:39,232 | ERROR | Dataset not found
+2026-07-07 18:32:39,159 | INFO | Dataset loaded successfully.
+2026-07-07 18:32:42,906 | INFO | Training Logistic Regression
+2026-07-07 18:32:43,045 | INFO | Logistic Regression trained successfully
+2026-07-07 18:32:43,045 | INFO | Training Decision Tree
+2026-07-07 18:32:43,051 | INFO | Decision Tree trained successfully
+2026-07-07 18:32:43,051 | INFO | Training Random Forest
+2026-07-07 18:32:43,386 | INFO | Random Forest trained successfully
+2026-07-07 18:32:43,386 | INFO | Training KNN
+2026-07-07 18:32:43,389 | INFO | KNN trained successfully
+2026-07-07 18:32:43,389 | INFO | Training SVM
+2026-07-07 18:32:43,419 | INFO | SVM trained successfully
+2026-07-07 18:32:43,419 | INFO | All models trained successfully
+2026-07-07 18:32:43,580 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/best_model.pkl
+2026-07-07 18:34:29,648 | INFO | Model saved at /Users/macbookair/Documents/ml projects for github/titanic dataset/models/Best_random_forest.pkl
+2026-07-07 18:34:52,361 | INFO | Dataset loaded successfully
+2026-07-07 18:34:52,361 | ERROR | Dataset not found

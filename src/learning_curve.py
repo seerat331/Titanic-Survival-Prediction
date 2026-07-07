@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
 
-class LeaarningCurve:
+class LearningCurve:
     def plot(self, model, X_train, y_train, save_path):
         train_sizes, train_scores, validation_scores=learning_curve(
             estimator=model,

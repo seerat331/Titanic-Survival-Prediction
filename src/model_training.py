@@ -4,6 +4,11 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
+from src.logger import logger
+from src.exception import ModelTrainingError
+
+print("Running model_training.py")
+print("Logger object:", logger)
 
 class ModelTrainer:
     def __init__(self):
@@ -19,12 +24,22 @@ class ModelTrainer:
     def train_models(self, X_train, y_train):
         trained_models={}
         for name, model in self.models.items():
-            print(f"Training {name}...")
-            model.fit(X_train, y_train)
-            trained_models[name]=model
-        print("\nAll models trained successfully!")
+            try:
+                logger.info(f"Training {name}")
+                model.fit(X_train, y_train)
+                trained_models[name] = model
+                logger.info(f"{name} trained successfully")
+            except Exception as e:
+
+                logger.exception(f"Error while training {name}")
+
+                raise ModelTrainingError(
+                    f"Training failed for {name}: {e}")
+            
+        logger.info("All models trained successfully")
         return  trained_models
+    
     
     def save_model(self, model, path):
         joblib.dump(model, path)
-        print(f"\nModel saved at:\n{path}")
+        logger.info(f"Model saved at {path}")
